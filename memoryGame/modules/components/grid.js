@@ -27,11 +27,16 @@ class GameGrid extends HTMLElement {
     get repeatImages() {
         return parseInt(this.getAttribute('repeatImages'), 10);
     }
+    set repeatImages(value) {
+        this.setAttribute('repeatImages', value);
+    }
 
     get numberImages() {
         return parseInt(this.getAttribute('numberImages'), 10);
     }
-
+    set numberImages(value) {
+        this.setAttribute('numberImages', value);
+    }
 
     constructor () {
         super();
@@ -39,8 +44,10 @@ class GameGrid extends HTMLElement {
         this.root = this.attachShadow({ mode: "open"});
 
         // Init properties
-        this.listImages = getRandomListImages(this.numberImages);
-        this.mapping    = [];
+        this.repeatImages = this.repeatImages || 2;
+        this.numberImages = this.numberImages || 2;
+        this.listImages   = getRandomListImages(this.numberImages);
+        this.mapping      = [];
 
         EventBus.subscribe('onCreateImage', image => {
             this.mapping.push(this.initGridImagePath(image));
